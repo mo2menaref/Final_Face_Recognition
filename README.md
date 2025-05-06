@@ -26,18 +26,24 @@ face-recognition/
 │   │   └── ...
 │   └── person2/
 │       └── ...
+├── models/                   # Additional model files
+│   ├── face_recognition_model.* # FaceNet model used for embeddings
+│   └── normalizer.pkl        # Normalizer for face embeddings
 ├── outputphoto/              # Processed face images (created during extraction)
 │   ├── person1/              
 │   └── person2/
 ├── templates/                # Flask templates (created when running simple_app.py)
 │   ├── login.html
 │   └── dashboard.html
+├── _pycache_/                # Python cache files (auto-generated)
 ├── detector.py               # Face detection module using MTCNN
 ├── embedder.py               # Face embedding extraction using FaceNet
 ├── recognizer.py             # Face recognition implementation
 ├── main.py                   # Command-line interface
 ├── simple_app.py             # Web application interface
-└── face_classifier.pkl       # Trained model (created after training)
+├── face_classifier.pkl       # SVM classifier model (created after training)
+├── README.md                 # Project documentation
+└── test*.jpeg                # Test images for recognition
 ```
 
 ## Quick Start Guide
@@ -53,12 +59,12 @@ pip install opencv-python mtcnn keras-facenet pillow scikit-learn flask numpy
 Organize your face images in the following structure:
 ```
 dataset/
-├── moamen/
-│   ├── moamen1.jpg
-│   ├── moamen2.jpg
+├── John/
+│   ├── john_1.jpg
+│   ├── john_2.jpg
 │   └── ...
-├── Nabil/
-│   ├── nabil1.jpg
+├── Alice/
+│   ├── alice_1.jpg
 │   └── ...
 └── ...
 ```
@@ -159,6 +165,16 @@ python main.py --mode recognize --input test.jpg --model your_model_name.pkl
 ```
 
 ## Advanced Configuration
+
+### Models Folder
+
+The `models/` directory contains important model files used by the face recognition system:
+
+- **face_recognition_model**: This is the FaceNet model used for generating face embeddings. FaceNet converts face images into 128-dimensional vectors that represent the unique features of each face.
+
+- **normalizer.pkl**: This is a scikit-learn Normalizer object that standardizes face embeddings to ensure consistent scaling. Proper normalization improves classification accuracy.
+
+These models are used by the `embedder.py` module when converting face images to embeddings. The system loads these models automatically, so you typically won't need to modify them unless you want to use alternative models.
 
 ### Face Detection Parameters
 
